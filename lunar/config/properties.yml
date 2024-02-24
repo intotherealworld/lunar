@@ -1,0 +1,43 @@
+lunar:
+  project-name: "lunar"
+  docs:
+    title: lunar
+    description: solar evaluator
+    version: "0.0.1"
+  logger:
+    version: 1
+    formatters:
+      simple:
+        format: '[%(asctime)s.%(msecs)03d] %(module)s - %(levelname)s - %(message)s'
+        datefmt: '%Y-%m-%d %H:%M:%S'
+    handlers:
+      console:
+        class: logging.StreamHandler
+        level: DEBUG
+        formatter: simple
+        stream: ext://sys.stdout
+    loggers:
+      uvicorn:
+        level: DEBUG
+        handlers: [console]
+        propagate: no
+      "gunicorn.access":
+        level: DEBUG
+        handlers: [console]
+        propagate: no
+      "gunicorn.error":
+        level: DEBUG
+        handlers: [console]
+        propagate: no
+      aipzipkin:
+        level: DEBUG
+        handlers: [console]
+        propagate: no
+    root:
+      level: DEBUG
+      handlers: [console]
+
+solar:
+  api:
+    base-url: https://api.upstage.ai/v1/solar
+    key: SolarAPIKEY
