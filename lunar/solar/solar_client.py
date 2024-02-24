@@ -1,3 +1,7 @@
+from __future__ import annotations
+
+from typing import Generator
+
 from openai import OpenAI
 
 from lunar import Environment
@@ -16,7 +20,7 @@ class SolarClient:
             user_content: str,
             system_content='You are a helpful assistant.',
             is_stream: bool = False,
-    ):
+    ) -> str | Generator[str, None, None]:
         stream = self.client.chat.completions.create(
             model='solar-1-mini-chat',
             messages=[
@@ -37,4 +41,4 @@ class SolarClient:
                 if chunk.choices[0].delta.content is not None:
                     yield chunk.choices[0].delta.content
         else:
-            return stream
+            return stream.choices[0].message.content
